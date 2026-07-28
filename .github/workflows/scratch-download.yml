@@ -3,6 +3,8 @@ name: Scratch project download
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   download:
