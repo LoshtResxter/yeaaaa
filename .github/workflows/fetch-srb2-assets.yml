@@ -1,0 +1,27 @@
+name: Fetch SRB2 2.2.15 assets
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact 2.2.15 release
+        run: |
+          set -euxo pipefail
+          curl -L --fail --retry 5 -o SRB2-v2215-Full.zip \
+            https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.15/SRB2-v2215-Full.zip
+          mkdir extracted
+          unzip -j SRB2-v2215-Full.zip 'zones.pk3' 'srb2.pk3' 'characters.pk3' -d extracted
+          ls -lh extracted
+      - uses: actions/upload-artifact@v4
+        with:
+          name: srb2-2215-core-assets
+          path: extracted/*.pk3
+          if-no-files-found: error
+          retention-days: 1
