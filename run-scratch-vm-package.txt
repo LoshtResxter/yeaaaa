@@ -1,1 +1,0 @@
-Trigger Scratch VM runtime packaging for local SB3 validation.
