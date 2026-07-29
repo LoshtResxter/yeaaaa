@@ -1,0 +1,33 @@
+name: Fetch Scratch port references
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Scratch downloader
+        run: npm install @turbowarp/sbdl@7.0.0
+      - name: Download reference projects
+        run: |
+          mkdir -p refs
+          cd refs
+          npx sbdl 692022787
+          npx sbdl 524456726
+          npx sbdl 321108828
+          npx sbdl 355778102
+          npx sbdl 600914428
+          npx sbdl 767167616
+          ls -lh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scratch-port-reference-projects
+          path: refs/*.sb3
+          retention-days: 1
