@@ -1,0 +1,1 @@
+Temporary trigger for exact SRB2 2.2.15 GFZ1 asset extraction.
